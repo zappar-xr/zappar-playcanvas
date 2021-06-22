@@ -1,0 +1,3 @@
+[submodule "playcanvas-sync"]
+	path = playcanvas-sync
+	url = https://github.com/zappar-xr/playcanvas-sync
