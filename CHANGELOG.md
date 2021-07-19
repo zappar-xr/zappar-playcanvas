@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1] - 2021-07-19
+
+### Added
+
+- Snapshot functionality and relevant documentation to `README.md`.
+
 ## [1.0.0] - 2021-06-22
 
 - Open sourced on GitHub.

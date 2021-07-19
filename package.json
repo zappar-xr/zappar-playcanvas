@@ -12,7 +12,10 @@
     "postinstall": "npm run copy-pc-types",
     "test": "jest"
   },
-  "author": "Zappar Limited",
+  "author": {
+    "name": "Zappar Limited",
+    "url": "https://www.zappar.com/"
+  },
   "license": "MIT",
   "dependencies": {
     "@zappar/mobile-only": "0.0.2",
@@ -28,6 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "@zappar/test-utils": "0.0.3",
+    "@zappar/webgl-snapshot": "0.0.18",
     "dotenv": "^10.0.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb-base": "^14.2.1",

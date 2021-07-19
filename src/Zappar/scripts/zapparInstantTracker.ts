@@ -18,6 +18,8 @@ zapparInstantTracker.attributes.add('Anchor Camera Offset', {
     description: 'Offset the target by this vector while its camera anchored'
 });
 
+
+
 zapparInstantTracker.attributes.add('Zappar Camera', { type: 'entity', description: "Zappar Camera (Drag from hierarchy)" });
 
 // initialize code called once per entity

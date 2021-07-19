@@ -5,7 +5,7 @@
 import * as mobileOnly from '@zappar/mobile-only';
 import type from '@zappar/zappar';
 import pc from './playcanvas';
-
+import * as ZapparWebGLSnapshot from '@zappar/webgl-snapshot';
 declare namespace Attributes{
     type FaceTracker = pc.Entity & {
         script : { zapparFaceTracker : Prototypes.FaceTracker };
@@ -86,6 +86,31 @@ declare namespace Prototypes{
         'Mobile Only' : boolean;
     } & pc.ScriptComponent;
 
+    type ZapparScreenshot = {
+        mergeImages : (sources : {src: string}[], options? : any) => Promise<string>;
+        postRender : () => void;
+        needsCapture : boolean,
+        // imageQuality : number,
+        shareOptions : {
+            shareButton: boolean,
+            shareTitle: string,
+            shareText: string,
+            shareUrl: string,
+            // downloadFileName: string,
+        }
+        localisation : {
+            SAVE: string,
+            SHARE: string,
+            NowOpenFilesAppToShare: string,
+            TapAndHoldToSave: string,
+        }
+        downloadOptions: {
+            imageQuality: number,
+            downloadFileName: string,
+            imageFormat: string,
+        }
+    } & pc.ScriptComponent;
+
 }
 
 declare global {
@@ -100,6 +125,8 @@ declare global {
             type FaceLandmark = typeof pc.ScriptType & { prototype : Prototypes.FaceLandmark};
             type InstantTracker = typeof pc.ScriptType & { prototype : Prototypes.instantTracker};
             type BrowserUtil = typeof pc.ScriptType & { prototype : Prototypes.BrowserUtil};
+            type ZapparScreenshot = typeof pc.ScriptType & { prototype : Prototypes.ZapparScreenshot};
+            type ZapparWebGLSnapshot = typeof ZapparWebGLSnapshot;
             namespace PC {
                 type GraphicsDevice = pc.GraphicsDevice & {
                     gl : WebGLRenderingContext,
