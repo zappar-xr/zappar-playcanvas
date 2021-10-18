@@ -45,7 +45,7 @@
     "playcanvas-sync": "file:playcanvas-sync",
     "puppeteer": "^10.0.0",
     "ts-jest": "^27.0.2",
-    "typescript": "^4.3.2",
+    "typescript": "^4.4.4",
     "typescript-eslint-parser": "^22.0.0"
   }
 }
