@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2022-01-07
+
+### Added
+
+- A `this.app.fire('zappar:camera', {message : 'flip', bool})` event to flip the direction of the camera.
+
 ## [1.0.1] - 2021-07-19
 
 ### Added

@@ -25,6 +25,26 @@ const cookies = [
         httpOnly: false,
         secure: false,
         session: true
+    },
+    {
+        name : "OptanonConsent",
+        value: "isGpcEnabled=0&datestamp=Fri+Jan+07+2022+15%3A18%3A43+GMT%2B0000+(Greenwich+Mean+Time)&version=6.18.0&isIABGlobal=false&hosts=&landingPath=https%3A%2F%2Flogin.playcanvas.com%2F%3Fcame_from%3Dhttps%253A%252F%252Fplaycanvas.com%252Feditor%252Fscene%252F1275139%252Flaunch%253Fdebug%253Dtrue",
+        domain: "playcanvas.com",
+        path: "/",
+        expires: 4294967295,
+        httpOnly: false,
+        secure: false,
+        session: true
+    },
+    {
+        name : "OptanonConsent",
+        value: "isGpcEnabled=0&datestamp=Fri+Jan+07+2022+15%3A18%3A43+GMT%2B0000+(Greenwich+Mean+Time)&version=6.18.0&isIABGlobal=false&hosts=&landingPath=https%3A%2F%2Flogin.playcanvas.com%2F%3Fcame_from%3Dhttps%253A%252F%252Fplaycanvas.com%252Feditor%252Fscene%252F1275139%252Flaunch%253Fdebug%253Dtrue&groups=C0001%3A1%2CC0002%3A0%2CC0004%3A0",
+        domain: "playcanvas.com",
+        path: "/",
+        expires: 4294967295,
+        httpOnly: false,
+        secure: false,
+        session: true
     }
 ]
 
@@ -45,6 +65,7 @@ describe('face tracking', () => {
             "[Zappar] INFO identity for license check: launch.playcanvas.com",
             "[Zappar] INFO face_tracker_t initialized",
             "face tracking model loaded",
+            "[Zappar] INFO html_element_source_t initialized",
             "[Zappar] INFO html_element_source_t initialized",
             "New anchor has appeared: 0",
             "Anchor is visible: 0"

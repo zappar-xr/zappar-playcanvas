@@ -44,6 +44,7 @@ You may also be interested in:
          * [Camera](#camera)
             * [Mirror Mode](#mirror-mode)
             * [Camera Pose](#camera-pose)
+            * [Front/Rear Camera Toggle](#frontrear-camera-toggle)
             * [Snapshot &amp; Social Sharing](#snapshot--social-sharing)
       * [Compatibility and Browser Support](#compatibility-and-browser-support)
          * [Detecting Browser Compatibility](#detecting-browser-compatibility)
@@ -62,7 +63,7 @@ You may also be interested in:
          * [PlayCanvas](#playcanvas)
       * [Links and Resources](#links-and-resources)
 
-<!-- Added by: zapparadmin, at: Mon Jul 19 15:08:17 BST 2021 -->
+<!-- Added by: zapparadmin, at: Fri Jan  7 15:34:20 GMT 2022 -->
 
 <!--te-->
 </details>
@@ -308,6 +309,17 @@ The Zappar library provides multiple modes for the camera to move around in the 
 
 - To have a light that always shines down from above the user, regardless of the angle of the device or anchors, use `Attitude` and place a light shining down the negative Y axis is world space.
 - In an application with a physics simulation of stacked blocks, and with gravity pointing down the negative Y axis of world space, using `AnchorOrigin` would allow the blocks to rest on a tracked image regardless of how the image is held by the user, while using `Attitude` would allow the user to tip the blocks off the image by tilting it.
+
+#### Front/Rear Camera Toggle
+
+You can switch between user and rear facing cameras using the following event:
+
+```ts
+const userFacing = true;
+this.app.fire('zappar:camera', {message : 'flip', userFacing})
+```
+
+This code would usually be found in a button click handler.
 
 #### Snapshot & Social Sharing
 

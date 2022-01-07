@@ -101,6 +101,22 @@ ZapparCamera.prototype.initialize = function () {
     */
     this.pipeline.glContextSet(gl);
 
+    const getActiveSource = () => this['Front Facing Camera'] ? ZapparCamera.prototype.source.user : ZapparCamera.prototype.source.rear;
+
+
+    this.app.on('zappar:camera',(ev)=> {
+        const {message, userFacing} = ev;
+        if (message === 'flip') {
+            if (userFacing === undefined){
+                this['Front Facing Camera'] = !this['Front Facing Camera'];
+                getActiveSource().start();
+            } else {
+                this['Front Facing Camera'] = userFacing;
+                getActiveSource().start();
+            }
+        }
+    });
+
     if(DEBUG){ //!TESTS
         let imgUrl = "https://scenefiles.s3.amazonaws.com/uar-dev/face.png"; //!TESTS
         let img = document.createElement("img"); //!TESTS
@@ -108,8 +124,11 @@ ZapparCamera.prototype.initialize = function () {
         img.crossOrigin = "anonymous"; //!TESTS
 
        img.onload = () => { //!TESTS
-            ZapparCamera.prototype.source = new Zappar.HTMLElementSource(this.pipeline, img); //!TESTS
-            ZapparCamera.prototype.source.start(); //!TESTS
+            ZapparCamera.prototype.source = { //!TESTS
+                user : new Zappar.HTMLElementSource(this.pipeline, img), //!TESTS
+                rear : new Zappar.HTMLElementSource(this.pipeline, img) //!TESTS
+            } //!TESTS
+            ZapparCamera.prototype.source.user.start(); //!TESTS
         } //!TESTS
 
     } else { //!TESTS
@@ -119,9 +138,10 @@ ZapparCamera.prototype.initialize = function () {
          * @param deviceId - The camera device id which will be used as the source.
          * @see https://docs.zap.works/universal-ar/javascript/pipelines-and-camera-processing/
         */
-        ZapparCamera.prototype.source = new Zappar.CameraSource(this.pipeline, Zappar.cameraDefaultDeviceID(this['Front Facing Camera']));
-
-
+        ZapparCamera.prototype.source = {
+            user : new Zappar.CameraSource(this.pipeline, Zappar.cameraDefaultDeviceID(true)),
+            rear : new Zappar.CameraSource(this.pipeline, Zappar.cameraDefaultDeviceID(false)),
+        }
         /**
          * Shows Zappar's built-in UI to request camera permissions
          * @returns A promise containing granted status.
@@ -133,7 +153,7 @@ ZapparCamera.prototype.initialize = function () {
                 /**
                 * Starts the camera source.
                 */
-                ZapparCamera.prototype.source.start();
+                getActiveSource().start();
             } else {
                 /**
                  * Shows Zappar's built-in permission denied UI.
@@ -145,24 +165,20 @@ ZapparCamera.prototype.initialize = function () {
 
     // Pause and resume the camera source based on the visibility status of the page.
     document.addEventListener('visibilitychange', () => {
+        const cameraSource = getActiveSource();
         switch (document.visibilityState) {
             case 'hidden':
                 /**
                 * Pauses the camera source.
                 */
-                ZapparCamera.prototype.source.pause();
+                cameraSource.pause();
                 break;
             case 'visible':
-                /**
-                * Starts the camera source.
-                */
-                ZapparCamera.prototype.source.start();
-                break;
             default:
                 /**
                 * Starts the camera source.
                 */
-                ZapparCamera.prototype.source.start();
+                cameraSource.start();
                 break;
         }
     });

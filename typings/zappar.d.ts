@@ -68,7 +68,10 @@ declare namespace Prototypes{
     } & pc.ScriptComponent;
 
     type Camera = {
-        source : type.CameraSource | type.HTMLElementSource;
+        source : {
+            user : type.CameraSource | type.HTMLElementSource,
+            rear : type.CameraSource | type.HTMLElementSource,
+        };
         cameraPoseMatrix : pc.Mat4;
         mirror : boolean;
         pipeline: type.Pipeline;
