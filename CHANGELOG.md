@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1] - 2022-01-31
+
+### Fixed
+
+- Some camera projection matrix properties not being copied over to PlayCanvas. Thanks [yaustar](https://forum.playcanvas.com/t/zap-ar-image-target-buttons-not-work-in-protrait-mode/22964/6)
+
+
 ## [1.1.0] - 2022-01-07
 
 ### Added

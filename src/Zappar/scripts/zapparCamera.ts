@@ -289,9 +289,16 @@ ZapparCamera.prototype.update = function () {
     /**
      * Override default camera's projection matrix with one provided by Zappar.
     */
-    if (this.entity.camera) {
-        this.entity.camera.calculateProjection = (mat) => {
+    const camera = this.entity.camera;
+    if (camera) {
+        camera.calculateProjection = (mat) => {
             mat.copy(projectionMatrix);
+            const data = projectionMatrix.data;
+            camera.horizontalFov = false;
+            camera.fov = (2.0 * Math.atan(1.0 / data[5]) * 180.0) / Math.PI;
+            camera.aspectRatio = data[5] / data[0];
+            camera.farClip = data[14] / (data[10] + 1);
+            camera.nearClip = data[14] / (data[10] - 1);
         };
     }
 };
