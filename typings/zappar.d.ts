@@ -14,6 +14,7 @@ declare namespace Attributes{
     type ZapparCamera = pc.Entity & {
         script : { zapparCamera : Prototypes.Camera }
     };
+
 }
 
 declare namespace Prototypes{
@@ -76,8 +77,12 @@ declare namespace Prototypes{
         mirror : boolean;
         pipeline: type.Pipeline;
         canvas : HTMLCanvasElement,
-        canvas_container : HTMLDivElement,
         gl : WebGLRenderingContext,
+        texture: pc.Texture & Partial<{ _glTexture : WebGLTexture}>;
+        material: pc.Material;
+        initializeBackground: () => void;
+        updateBackgroundTexture : (pipeline: type.Pipeline, camera: pc.CameraComponent, mirror: boolean ) => void;
+        backgroundPlane: pc.Entity;
         'Front Facing Camera' : boolean;
         'Mirror Mode' : 'none' | 'poses' | 'css';
         'Camera Pose' : 'default' | 'anchor' | 'attitude';

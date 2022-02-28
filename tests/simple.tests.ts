@@ -1,4 +1,4 @@
-import * as util from '@zappar/test-utils';
+import * as util from '@zappar/jest-console-logs';
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 
 expect.extend({ toMatchImageSnapshot });
@@ -52,39 +52,43 @@ const cookies = [
 const url = "https://launch.playcanvas.com/1043910?debug=true";
 describe('face tracking', () => {
 
-    it('console logs', async () => {
-        const page = await browser.newPage();
-        await page.setCookie(...cookies);
-        page.goto(url);
-        await util.expectConsoleLogs([
-            /^Powered by PlayCanvas/,
-            /Zappar JS v\d*.\d*.\d*/,
-            /Zappar CV v\d*.\d*.\d*/,
-            /^Zappar for PlayCanvas v/,
-            "[Zappar] INFO pipeline_t initialized",
-            "[Zappar] INFO identity for license check: launch.playcanvas.com",
-            "[Zappar] INFO face_tracker_t initialized",
-            "face tracking model loaded",
-            "[Zappar] INFO html_element_source_t initialized",
-            "[Zappar] INFO html_element_source_t initialized",
-            "New anchor has appeared: 0",
-            "Anchor is visible: 0"
-        ], page, 30000, new Set(["[Zappar] INFO no display data", "messenger connected"]));
-    });
+    it('console logs/screnshot', async () => {
 
-    it('screenshot', async () => {
         const page = await browser.newPage();
         await page.setCookie(...cookies);
-        page.goto(url);
-        await util.waitForConsoleLog("Anchor is visible: 0", page, 10000);
+        page.goto(url, { timeout: 0 });
+        await page.waitForSelector("canvas");
+
+        await util.expectLogs({
+            expected: [
+                /Zappar JS v\d*.\d*.\d*/,
+                /Zappar CV v\d*.\d*.\d*/,
+                /^Zappar for PlayCanvas v/,
+                "[Zappar] INFO pipeline_t initialized",
+                "[Zappar] INFO identity for license check: launch.playcanvas.com",
+                "[Zappar] INFO face_tracker_t initialized",
+                "face tracking model loaded",
+                "[Zappar] INFO html_element_source_t initialized",
+                "[Zappar] INFO html_element_source_t initialized",
+                "New anchor has appeared: 0",
+                "Anchor is visible: 0"
+            ],
+            page: page as any,
+            timeoutMs: 120000
+        });
+
+
         const screenshot = await page.screenshot();
+
         expect(screenshot).toMatchImageSnapshot({
             customDiffConfig: {
-            threshold: 0.02,
+            threshold: 0.025,
             },
-            failureThreshold: 0.02,
+            failureThreshold: 0.035,
             failureThresholdType: "percent",
         });
+
+        await page.close();
     });
 
 });

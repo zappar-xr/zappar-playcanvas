@@ -1,7 +1,8 @@
 /* jshint esversion: 6 */
 const ZapparCamera = pc.createScript('zapparCamera') as Z.Type.Camera;
 const DEBUG = location.href.indexOf("https://launch.playcanvas.com/1043910") !== -1; //!TESTS
-Zappar.setLogLevel( DEBUG? Zappar.LogLevel.LOG_LEVEL_VERBOSE : Zappar.LogLevel.LOG_LEVEL_WARNING ); //!TESTS
+
+if (DEBUG) Zappar.setLogLevel( DEBUG? Zappar.LogLevel.LOG_LEVEL_VERBOSE : Zappar.LogLevel.LOG_LEVEL_WARNING ); //!TESTS
 
 
 // Script attributes for camera customization.
@@ -46,44 +47,11 @@ ZapparCamera.attributes.add('Camera Pose', {
 // initialize code called once per entity
 ZapparCamera.prototype.initialize = function () {
     // Create a canvas where the camera source will be rendered.
-    const canvas = document.createElement('canvas');
-    // Get refference to PC Canvas.
-    const PC_canvas = document.querySelector('canvas') as HTMLCanvasElement;
-
-    // Create a container which will store both canvas elements.
-    const canvas_container = document.createElement('div');
-    document.body.appendChild(canvas_container);
-
-    // Append both canvas elements to the container.
-    // This will be used to CSS mirror.
-    canvas_container.appendChild(canvas);
-    canvas_container.appendChild(PC_canvas);
-
-    // Style ZapparCanvas to fit screen.
-    canvas.id = 'ZapparCanvas';
-    canvas.style.height = '100%';
-    canvas.style.width = '100%';
-    canvas.style.margin = '0px';
-
-    canvas.width = PC_canvas.clientWidth;
-    canvas.height = PC_canvas.clientHeight;
-
-    // Copy PC canvas dimensions on resize.
-    window.addEventListener("resize", () => {
-        canvas.width = PC_canvas.clientWidth;
-        canvas.height = PC_canvas.clientHeight;
-    });
-
-    // Get ZapparCanvas context.
-    const gl = canvas.getContext('webgl');
+    this.canvas = this.app.graphicsDevice.canvas;
+    this.gl = this.canvas.getContext('webgl2') || this.canvas.getContext('webgl')!;
 
     // Check if graphics device has webgl.
-    if (!gl) throw new Error('no gl');
-
-    // Export objects which we'll use in update.
-    this.gl = gl;
-    this.canvas_container = canvas_container;
-    this.canvas = canvas;
+    if (!this.gl) throw new Error('no gl');
 
     // These will be used by trackers
     this.cameraPoseMatrix = new pc.Mat4();
@@ -99,7 +67,7 @@ ZapparCamera.prototype.initialize = function () {
      * Sets the WebGL context used for the processing and upload of camera textures.
      * @param gl - The WebGL context.
     */
-    this.pipeline.glContextSet(gl);
+    this.pipeline.glContextSet(this.gl);
 
     const getActiveSource = () => this['Front Facing Camera'] ? ZapparCamera.prototype.source.user : ZapparCamera.prototype.source.rear;
 
@@ -182,6 +150,8 @@ ZapparCamera.prototype.initialize = function () {
                 break;
         }
     });
+
+    this.initializeBackground();
 };
 
 
@@ -214,69 +184,30 @@ ZapparCamera.prototype.update = function () {
     switch (this['Mirror Mode']) {
         case 'none':
             this.mirror = false;
-            this.canvas_container.style.transform = '';
+            this.canvas.style.transform = '';
             break;
         case 'poses':
             this.mirror = true;
-            this.canvas_container.style.transform = '';
+            this.canvas.style.transform = '';
             break;
         case 'css':
             this.mirror = false;
-            this.canvas_container.style.transform = 'scaleX(-1)';
+            this.canvas.style.transform = 'scaleX(-1)';
             break;
         default:
             throw new Error('Unknown mirror type');
     }
 
-     /**
-     * Draw the camera to the screen as a full screen quad.
-     *
-     * Please note this function modifies some GL state during its operation so you may need to reset the following GL state if you use it:
-     * - The currently bound texture 2D is set to `null` (e.g. `gl.bindTexture(gl.TEXTURE_2D, null)`)
-     * - The currently bound array buffer is set to `null` (e.g. `gl.bindBuffer(gl.ARRAY_BUFFER, null);`)
-     * - The currently bound program is set to `null` (e.g. `gl.useProgram(null)`)
-     * - The currently active texture is set to `gl.TEXTURE0` (e.g. `gl.activeTexture(gl.TEXTURE0)`)
-     * - These features are disabled: `gl.SCISSOR_TEST`, `gl.DEPTH_TEST`, `gl.BLEND`, `gl.CULL_FACE`
-     * @param renderWidth - The width of the canvas.
-     * @param renderHeight - The height of the canvas.
-     * @param mirror - Pass `true` to mirror the camera image in the X-axis.
-    */
-    this.pipeline.cameraFrameDrawGL(width, height, this.mirror);
 
-
-    /**
-     * Prepares camera frames for processing.
-     *
-     * Call this function on your pipeline once an animation frame (e.g. during your `requestAnimationFrame` function) in order to process incoming camera frames.
-     *
-     * Please note this function modifies some GL state during its operation so you may need to reset the following GL state if you use it:
-     * - The currently bound framebuffer is set to `null` (e.g. `gl.bindFramebuffer(gl.FRAMEBUFFER, null)`)
-     * - The currently bound texture 2D is set to `null` (e.g. `gl.bindTexture(gl.TEXTURE_2D, null)`)
-     * - The currently bound array buffer is set to `null` (e.g. `gl.bindBuffer(gl.ARRAY_BUFFER, null);`)
-     * - The currently bound element array buffer is set to `null` (e.g. `gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)`)
-     * - The currently bound program is set to `null` (e.g. `gl.useProgram(null)`)
-     * - The currently active texture is set to `gl.TEXTURE0` (e.g. `gl.activeTexture(gl.TEXTURE0)`)
-     * - These features are disabled: `gl.SCISSOR_TEST`, `gl.DEPTH_TEST`, `gl.BLEND`, `gl.CULL_FACE`
-     * - The pixel store flip-Y mode is disabled (e.g. `gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false)`)
-     * - The viewport is changed (e.g. `gl.viewport(...)`)
-     * - The clear color is changed (e.g. `gl.clearColor(...)`)
-    */
     this.pipeline.processGL();
 
-    // Adjust viewport to fit screen.
-    this.gl.viewport(0, 0, width, height);
-
-    /**
-     * Uploads the current camera frame to a WebGL texture.
-    */
-    this.pipeline.cameraFrameUploadGL();
-
+    // Update to using the latest tracking frame data
+    this.pipeline.frameUpdate();
 
     /**
      * Returns the camera model (i.e. the intrinsic camera parameters) for the current frame.
     */
     const model = this.pipeline.cameraModel();
-
     /**
      * Returns the projection matrix from a camera model / dimensions.
      * @param model - The camera model.
@@ -285,11 +216,11 @@ ZapparCamera.prototype.update = function () {
     */
     const projectionMatrixArray = Array.from(Zappar.projectionMatrixFromCameraModel(model, width, height));
     const projectionMatrix = new pc.Mat4().set(projectionMatrixArray);
-
     /**
      * Override default camera's projection matrix with one provided by Zappar.
     */
     const camera = this.entity.camera;
+
     if (camera) {
         camera.calculateProjection = (mat) => {
             mat.copy(projectionMatrix);
@@ -300,5 +231,84 @@ ZapparCamera.prototype.update = function () {
             camera.farClip = data[14] / (data[10] + 1);
             camera.nearClip = data[14] / (data[10] - 1);
         };
+        this.updateBackgroundTexture(this.pipeline, camera, this['Mirror Mode'] === 'poses');
     }
+};
+
+
+
+ZapparCamera.prototype.initializeBackground = function() {
+    this.backgroundPlane = new pc.Entity();
+    this.backgroundPlane.addComponent("render", {
+        type: 'plane',
+    });
+
+    this.backgroundPlane.setLocalEulerAngles(90, 180, 180);
+
+    this.entity.addChild(this.backgroundPlane);
+
+    this.texture = new pc.Texture(this.app.graphicsDevice, {
+        format: pc.PIXELFORMAT_R8_G8_B8
+    });
+
+    this.material = new pc.Material();
+
+
+    this.backgroundPlane.render!.material = this.material;
+
+    const shaderDefinition = {
+        attributes: {
+            position: pc.SEMANTIC_POSITION,
+            texcoord: pc.SEMANTIC_TEXCOORD0
+        },
+        vshader: `
+            precision highp float;
+            attribute vec3 position;
+            attribute vec2 texcoord;
+            uniform mat4 texTransform;
+
+            uniform mat4 matrix_model;
+            uniform mat4 matrix_viewProjection;
+
+            varying vec2 uv;
+
+            void main(void)
+            {
+                uv = (texTransform * vec4(texcoord.xy, 0., 1.)).xy;
+
+                gl_Position = matrix_viewProjection * matrix_model * vec4(position, 1.0);
+            }`,
+        fshader: `
+            precision highp float;
+            varying vec2 uv;
+            uniform sampler2D uCameraTexture;
+
+            void main(void)
+            {
+                vec4 color = texture2D(uCameraTexture, uv);
+                gl_FragColor = color;
+            }`
+    };
+
+    const shader = new pc.Shader(this.app.graphicsDevice, shaderDefinition);
+
+    this.material.shader = shader;
+    this.material.setParameter('uCameraTexture', this.texture);
+};
+
+
+ZapparCamera.prototype.updateBackgroundTexture = function (pipeline, camera, mirror) {
+    const { aspectRatio, fov, farClip } = camera;
+    this.backgroundPlane.setPosition(0, 0, -(farClip - Number.MIN_VALUE));
+
+    const dist = this.backgroundPlane.getPosition().length();
+    const angRad = fov * Math.PI / 180;
+    const y = dist * Math.tan(angRad / 2) * 2;
+    const x = y * aspectRatio;
+
+    this.backgroundPlane.setLocalScale(x, 1, y);
+
+    this.texture._glTexture = pipeline.cameraFrameTextureGL();
+    const mat = pipeline.cameraFrameTextureMatrix(this.app.graphicsDevice.width, this.app.graphicsDevice.height, mirror);
+    this.material.setParameter('texTransform', mat as any);
 };
