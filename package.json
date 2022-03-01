@@ -29,7 +29,7 @@
     "@zappar/webgl-snapshot": "0.0.18",
     "dotenv": "^10.0.0",
     "eslint": "^7.27.0",
-    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsdoc": "^35.1.2",
     "playcanvas": "^1.42.0",
