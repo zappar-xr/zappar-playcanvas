@@ -81,7 +81,7 @@ declare namespace Prototypes{
         texture: pc.Texture & Partial<{ _glTexture : WebGLTexture}>;
         material: pc.Material;
         initializeBackground: () => void;
-        updateBackgroundTexture : (pipeline: type.Pipeline, camera: pc.CameraComponent, mirror: boolean ) => void;
+        updateBackgroundTexture : (pipeline: type.Pipeline) => void;
         backgroundPlane: pc.Entity;
         'Front Facing Camera' : boolean;
         'Mirror Mode' : 'none' | 'poses' | 'css';

@@ -231,7 +231,7 @@ ZapparCamera.prototype.update = function () {
             camera.farClip = data[14] / (data[10] + 1);
             camera.nearClip = data[14] / (data[10] - 1);
         };
-        this.updateBackgroundTexture(this.pipeline, camera, this['Mirror Mode'] === 'poses');
+        this.updateBackgroundTexture(this.pipeline);
     }
 };
 
@@ -243,7 +243,7 @@ ZapparCamera.prototype.initializeBackground = function() {
         type: 'plane',
     });
 
-    this.backgroundPlane.setLocalEulerAngles(90, 180, 180);
+    this.backgroundPlane.setLocalEulerAngles(-90, 0, 0);
 
     this.entity.addChild(this.backgroundPlane);
 
@@ -252,7 +252,7 @@ ZapparCamera.prototype.initializeBackground = function() {
     });
 
     this.material = new pc.Material();
-
+    this.material.cull = pc.CULLFACE_FRONT;
 
     this.backgroundPlane.render!.material = this.material;
 
@@ -297,8 +297,8 @@ ZapparCamera.prototype.initializeBackground = function() {
 };
 
 
-ZapparCamera.prototype.updateBackgroundTexture = function (pipeline, camera, mirror) {
-    const { aspectRatio, fov, farClip } = camera;
+ZapparCamera.prototype.updateBackgroundTexture = function (pipeline) {
+    const { aspectRatio, fov, farClip } = this.entity.camera as pc.CameraComponent;
     this.backgroundPlane.setPosition(0, 0, -(farClip - Number.MIN_VALUE));
 
     const dist = this.backgroundPlane.getPosition().length();
@@ -309,6 +309,6 @@ ZapparCamera.prototype.updateBackgroundTexture = function (pipeline, camera, mir
     this.backgroundPlane.setLocalScale(x, 1, y);
 
     this.texture._glTexture = pipeline.cameraFrameTextureGL();
-    const mat = pipeline.cameraFrameTextureMatrix(this.app.graphicsDevice.width, this.app.graphicsDevice.height, mirror);
+    const mat = pipeline.cameraFrameTextureMatrix(this.app.graphicsDevice.width, this.app.graphicsDevice.height, this.mirror);
     this.material.setParameter('texTransform', mat as any);
 };

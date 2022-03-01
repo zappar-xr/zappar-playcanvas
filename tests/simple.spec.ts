@@ -1,9 +1,7 @@
-import * as util from '@zappar/jest-console-logs';
-import { toMatchImageSnapshot } from "jest-image-snapshot";
+import { test, expect } from '@playwright/test';
 
-expect.extend({ toMatchImageSnapshot });
+
 require('dotenv').config()
-jest.setTimeout(60000);
 
 const cookies = [
     {
@@ -50,45 +48,20 @@ const cookies = [
 
 
 const url = "https://launch.playcanvas.com/1043910?debug=true";
-describe('face tracking', () => {
+test.describe('face tracking', () => {
 
-    it('console logs/screnshot', async () => {
-
-        const page = await browser.newPage();
-        await page.setCookie(...cookies);
-        page.goto(url, { timeout: 0 });
+    test("screenshot", async ({ page, context })=>{
+        await context.addCookies(cookies);
+        await page.goto(url);
         await page.waitForSelector("canvas");
+        //TODO: Console logs instead of timeout.
+        await page.waitForTimeout(5000);
 
-        await util.expectLogs({
-            expected: [
-                /Zappar JS v\d*.\d*.\d*/,
-                /Zappar CV v\d*.\d*.\d*/,
-                /^Zappar for PlayCanvas v/,
-                "[Zappar] INFO pipeline_t initialized",
-                "[Zappar] INFO identity for license check: launch.playcanvas.com",
-                "[Zappar] INFO face_tracker_t initialized",
-                "face tracking model loaded",
-                "[Zappar] INFO html_element_source_t initialized",
-                "[Zappar] INFO html_element_source_t initialized",
-                "New anchor has appeared: 0",
-                "Anchor is visible: 0"
-            ],
-            page: page as any,
-            timeoutMs: 120000
-        });
-
-
-        const screenshot = await page.screenshot();
-
-        expect(screenshot).toMatchImageSnapshot({
-            customDiffConfig: {
-            threshold: 0.025,
-            },
-            failureThreshold: 0.035,
-            failureThresholdType: "percent",
+        expect(await page.screenshot()).toMatchSnapshot('simple-ft.png', {
+            threshold: 0.25
         });
 
         await page.close();
-    });
+    })
 
 });
