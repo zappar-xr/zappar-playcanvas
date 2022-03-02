@@ -95,7 +95,6 @@ declare namespace Prototypes{
     } & pc.ScriptComponent;
 
     type ZapparScreenshot = {
-        mergeImages : (sources : {src: string}[], options? : any) => Promise<string>;
         postRender : () => void;
         needsCapture : boolean,
         // imageQuality : number,

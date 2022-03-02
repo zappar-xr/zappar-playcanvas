@@ -2,8 +2,6 @@ var zapparScreenshot = pc.createScript('zapparScreenshot') as Z.Type.ZapparScree
 
 declare let ZapparWebGLSnapshot: Z.Type.ZapparWebGLSnapshot;
 
-
-
 zapparScreenshot.attributes.add('downloadOptions', {
     type: 'json',
     schema: [
@@ -112,10 +110,9 @@ zapparScreenshot.prototype.initialize = function() {
 zapparScreenshot.prototype.postRender = function () {
     if(this.needsCapture){
         this.needsCapture = false;
-        const zapparCanvasImage =  (document.getElementById('ZapparCanvas') as HTMLCanvasElement).toDataURL();
-        const pcCanvasImage = this.app.graphicsDevice.canvas.toDataURL();
-        this.mergeImages([{src: zapparCanvasImage}, {src: pcCanvasImage}]).then(b64 => (ZapparWebGLSnapshot).default({
-            data: b64,
+        const image = this.app.graphicsDevice.canvas.toDataURL();
+        ZapparWebGLSnapshot.default({
+            data: image,
             hideShareButton: !this.shareOptions.shareButton,
             shareTitle: this.shareOptions.shareTitle,
             shareUrl: this.shareOptions.shareUrl,
@@ -136,76 +133,6 @@ zapparScreenshot.prototype.postRender = function () {
             SHARE: this.localisation.SHARE,
             NowOpenFilesAppToShare: this.localisation.NowOpenFilesAppToShare,
             TapAndHoldToSave: this.localisation.TapAndHoldToSave,
-        }));
+        })
     }
-};
-
-// MIT License https://github.com/lukechilds/merge-images
-
-// Copyright (c) 2016 Luke Childs
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-zapparScreenshot.prototype.mergeImages = function(sources, options = {}) {
-
-    const defaultOptions = {
-        format: this.downloadOptions.imageFormat,
-        quality: this.downloadOptions.imageQuality,
-        width: undefined,
-        height: undefined,
-        Canvas: undefined,
-        crossOrigin: undefined
-    };
-
-    return new Promise(resolve => {
-        options = Object.assign({}, defaultOptions, options);
-
-        const canvas = window.document.createElement('canvas');
-
-
-        // Load sources
-        const images = sources.map(source => new Promise((resolve, reject) => {
-            const img = document.createElement('img');
-            img.crossOrigin = options.crossOrigin;
-            img.onerror = () => reject(new Error('Couldn\'t load image'));
-            img.onload = () => resolve(Object.assign({}, source, { img }));
-            img.src = source.src;
-        }));
-
-        // Get canvas context
-        const ctx = canvas.getContext('2d');
-
-        // When sources have loaded
-        resolve(Promise.all(images)
-            .then((images : any) => {
-                // Set canvas dimensions
-                const getSize = (dim: string) => options[dim] || Math.max(...images.map((image: { img: { [x: string]: any; }; }) => image.img[dim]));
-                canvas.width = getSize('width');
-                canvas.height = getSize('height');
-
-                // Draw images to canvas
-                images.forEach((image: { opacity: number; img: any, x: number; y: number; }) => {
-                    ctx!.globalAlpha = image.opacity ? image.opacity : 1;
-                    return ctx!.drawImage(image.img, image.x || 0, image.y || 0);
-                });
-
-                // Resolve all other data URIs sync
-                return canvas.toDataURL(options.format, options.quality);
-            }));
-    });
 };
