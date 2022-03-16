@@ -1,6 +1,6 @@
 {
-    "PLAYCANVAS_BRANCH_ID": "6f861389-c4e5-402c-a855-9f834b65f1e6",
-    "PLAYCANVAS_PROJECT_ID": 742337,
-    "PLAYCANVAS_BAD_FILE_REG": "^\\.|~$|jsconfig.json",
-    "PLAYCANVAS_BAD_FOLDER_REG": "^\\.|typings"
-  }
+  "PLAYCANVAS_BRANCH_ID": "6f861389-c4e5-402c-a855-9f834b65f1e6",
+  "PLAYCANVAS_PROJECT_ID": 000000,
+  "PLAYCANVAS_BAD_FILE_REG": "^\\.|~$|jsconfig.json",
+  "PLAYCANVAS_BAD_FOLDER_REG": "^\\.|typings"
+}

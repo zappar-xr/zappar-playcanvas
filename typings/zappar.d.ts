@@ -78,7 +78,7 @@ declare namespace Prototypes{
         pipeline: type.Pipeline;
         canvas : HTMLCanvasElement,
         gl : WebGLRenderingContext,
-        texture: pc.Texture & Partial<{ _glTexture : WebGLTexture}>;
+        texture: pc.Texture & {impl?: { _glTexture?: WebGLTexture}} & { _glTexture?: WebGLTexture};
         material: pc.Material;
         initializeBackground: () => void;
         updateBackgroundTexture : (pipeline: type.Pipeline) => void;

@@ -303,12 +303,18 @@ ZapparCamera.prototype.updateBackgroundTexture = function (pipeline) {
 
     const dist = this.backgroundPlane.getPosition().length();
     const angRad = fov * Math.PI / 180;
+
     const y = dist * Math.tan(angRad / 2) * 2;
     const x = y * aspectRatio;
 
     this.backgroundPlane.setLocalScale(x, 1, y);
 
-    this.texture._glTexture = pipeline.cameraFrameTextureGL();
+    if(this.texture.impl && this.texture.impl._glTexture){
+        this.texture.impl._glTexture = pipeline.cameraFrameTextureGL();
+    } else {
+        this.texture._glTexture = pipeline.cameraFrameTextureGL();
+    }
+
     const mat = pipeline.cameraFrameTextureMatrix(this.app.graphicsDevice.width, this.app.graphicsDevice.height, this.mirror);
     this.material.setParameter('texTransform', mat as any);
 };
