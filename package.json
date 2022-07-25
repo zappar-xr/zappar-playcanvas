@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@zappar/mobile-only": "0.0.2",
-    "@zappar/zappar": "^0.3.9"
+    "@zappar/zappar": "^0.3.18"
   },
   "devDependencies": {
     "@playwright/test": "^1.19.2",
