@@ -2159,7 +2159,7 @@ export class CameraComponent extends Component {
      * // Get the start and end points of a 3D ray fired from a screen click position
     var start = entity.camera.screenToWorld(clickX, clickY, entity.camera.nearClip);
     var end = entity.camera.screenToWorld(clickX, clickY, entity.camera.farClip);
-    
+
     // Use the ray coordinates to perform a raycast
     app.systems.rigidbody.raycastFirst(start, end, function (result) {
         console.log("Entity " + result.entity.name + " was selected");
@@ -2200,7 +2200,7 @@ export class CameraComponent extends Component {
         }
     });
      * @param type - The type of session. Can be one of the following:
-    
+
     * {@link XRTYPE_INLINE}: Inline - always available type of session. It has
     limited feature availability and is rendered into HTML element.
     * {@link XRTYPE_VR}: Immersive VR - session that provides exclusive access
@@ -2208,7 +2208,7 @@ export class CameraComponent extends Component {
     * {@link XRTYPE_AR}: Immersive AR - session that provides exclusive access
     to the VR/AR device that is intended to be blended with the real-world environment.
      * @param spaceType - Reference space type. Can be one of the following:
-    
+
     * {@link XRSPACE_VIEWER}: Viewer - always supported space with some basic
     tracking capabilities.
     * {@link XRSPACE_LOCAL}: Local - represents a tracking space with a native
@@ -2482,7 +2482,7 @@ export class CollisionComponent extends Component {
     constructor(system: CollisionComponentSystem, entity: Entity);
     /**
      * The type of the collision volume. Can be:
-    
+
     * "box": A box-shaped collision volume.
     * "capsule": A capsule-shaped collision volume.
     * "compound": A compound shape. Any descendant entities with a collision component
@@ -2492,7 +2492,7 @@ export class CollisionComponent extends Component {
     * "cylinder": A cylinder-shaped collision volume.
     * "mesh": A collision volume that uses a model asset as its shape.
     * "sphere": A sphere-shaped collision volume.
-    
+
     Defaults to "box".
     */
     type: string;
@@ -2682,7 +2682,7 @@ export class ElementComponent extends Component {
     constructor(system: ElementComponentSystem, entity: Entity);
     /**
      * The type of the ElementComponent. Can be:
-    
+
     * {@link ELEMENTTYPE_GROUP}: The component can be used as a layout mechanism to create groups of ElementComponents e.g. panels.
     * {@link ELEMENTTYPE_IMAGE}: The component will render an image
     * {@link ELEMENTTYPE_TEXT}: The component will render text
@@ -3074,10 +3074,10 @@ export class LayoutGroupComponent extends Component {
     /**
      * Whether the layout should run horizontally or
     vertically. Can be:
-    
+
     * {@link ORIENTATION_HORIZONTAL}
     * {@link ORIENTATION_VERTICAL}
-    
+
     Defaults to {@link ORIENTATION_HORIZONTAL}.
     */
     orientation: number;
@@ -3111,7 +3111,7 @@ export class LayoutGroupComponent extends Component {
     /**
      * Fitting logic to be applied when positioning and
     scaling child elements. Can be:
-    
+
     * {@link FITTING_NONE}: Child elements will be rendered at their natural size.
     * {@link FITTING_STRETCH}: When the natural size of all child elements does not
     fill the width of the container, children will be stretched to fit. The rules for how
@@ -3133,7 +3133,7 @@ export class LayoutGroupComponent extends Component {
     LayoutChildComponent#fitWidthProportion} values, but do not exceed the {@link
     LayoutChildComponent#minWidth} of each child.
     * {@link FITTING_BOTH}: Applies both STRETCH and SHRINK logic as necessary.
-    
+
     Defaults to {@link FITTING_NONE}.
     */
     widthFitting: number;
@@ -3863,14 +3863,14 @@ export class ParticleSystemComponent extends Component {
     normalMap: Texture;
     /**
      * Shape of the emitter. Defines the bounds inside which particles are spawned. Also affects the direction of initial velocity.
-    
+
     * {@link EMITTERSHAPE_BOX}: Box shape parameterized by emitterExtents. Initial velocity is directed towards local Z axis.
     * {@link EMITTERSHAPE_SPHERE}: Sphere shape parameterized by emitterRadius. Initial velocity is directed outwards from the center.
     */
     emitterShape: number;
     /**
      * Sorting mode. Forces CPU simulation, so be careful.
-    
+
     * {@link PARTICLESORT_NONE}: No sorting, particles are drawn in arbitrary order. Can be simulated on GPU.
     * {@link PARTICLESORT_DISTANCE}: Sorting based on distance to the camera. CPU only.
     * {@link PARTICLESORT_NEWER_FIRST}: Newer particles are drawn first. CPU only.
@@ -3884,7 +3884,7 @@ export class ParticleSystemComponent extends Component {
     /**
      * Controls how particles are blended when being written to the currently active render target.
     Can be:
-    
+
     * {@link BLEND_SUBTRACTIVE}: Subtract the color of the source fragment from the destination fragment and write the result to the frame buffer.
     * {@link BLEND_ADDITIVE}: Add the color of the source fragment to the destination fragment and write the result to the frame buffer.
     * {@link BLEND_NORMAL}: Enable simple translucency for materials such as glass. This is equivalent to enabling a source blend mode of {@link BLENDMODE_SRC_ALPHA} and a destination blend mode of {@link BLENDMODE_ONE_MINUS_SRC_ALPHA}.
@@ -3896,7 +3896,7 @@ export class ParticleSystemComponent extends Component {
     blend: number;
     /**
      * Sorting mode. Forces CPU simulation, so be careful.
-    
+
     * {@link PARTICLEORIENTATION_SCREEN}: Particles are facing camera.
     * {@link PARTICLEORIENTATION_WORLD}: User defines world space normal (particleNormal) to set planes orientation.
     * {@link PARTICLEORIENTATION_EMITTER}: Similar to previous, but the normal is affected by emitter(entity) transformation.
@@ -4375,12 +4375,12 @@ export class RigidBodyComponent extends Component {
     mask: number;
     /**
      * The rigid body type determines how the body is simulated. Can be:
-    
+
     * {@link BODYTYPE_STATIC}: infinite mass and cannot move.
     * {@link BODYTYPE_DYNAMIC}: simulated according to applied forces.
     * {@link BODYTYPE_KINEMATIC}: infinite mass and does not respond to forces (can only be moved
     by setting the position and rotation of component's {@link Entity}).
-    
+
     Defaults to {@link BODYTYPE_STATIC}.
     */
     type: string;
@@ -4736,7 +4736,7 @@ export class ScrollViewComponent extends Component {
     vertical: boolean;
     /**
      * Specifies how the scroll view should behave when the user scrolls past the end of the content. Modes are defined as follows:
-    
+
     * {@link SCROLL_MODE_CLAMP}: Content does not scroll any further than its bounds.
     * {@link SCROLL_MODE_BOUNCE}: Content scrolls past its bounds and then gently bounces back.
     * {@link SCROLL_MODE_INFINITE}: Content can scroll forever.
@@ -4830,10 +4830,10 @@ export class ScrollbarComponent extends Component {
     constructor(system: ScrollbarComponentSystem, entity: Entity);
     /**
      * Whether the scrollbar moves horizontally or vertically. Can be:
-    
+
     * {@link ORIENTATION_HORIZONTAL}: The scrollbar animates in the horizontal axis.
     * {@link ORIENTATION_VERTICAL}: The scrollbar animates in the vertical axis.
-    
+
     Defaults to {@link ORIENTATION_HORIZONTAL}.
     */
     orientation: number;
@@ -5008,11 +5008,11 @@ export class SoundComponent extends Component {
     /**
      * Determines which algorithm to use to reduce the
     volume of the sound as it moves away from the listener. Can be:
-    
+
     * {@link DISTANCE_LINEAR}
     * {@link DISTANCE_INVERSE}
     * {@link DISTANCE_EXPONENTIAL}
-    
+
     Defaults to {@link DISTANCE_LINEAR}.
     */
     distanceModel: string;
@@ -5287,7 +5287,7 @@ export class SpriteComponent extends Component {
     stop(): void;
     /**
      * The type of the SpriteComponent. Can be:
-    
+
     * {@link SPRITETYPE_SIMPLE}: The component renders a single frame from a sprite asset.
     * {@link SPRITETYPE_ANIMATED}: The component can play sprite animation clips.
     */
@@ -9036,7 +9036,7 @@ export class MouseEvent {
     dy: number;
     /**
      * The mouse button associated with this event. Can be:
-    
+
     * {@link MOUSEBUTTON_LEFT}
     * {@link MOUSEBUTTON_MIDDLE}
     * {@link MOUSEBUTTON_RIGHT}
@@ -9541,12 +9541,12 @@ export class Curve {
     length: number;
     /**
      * The curve interpolation scheme. Can be:
-    
+
     * {@link CURVE_LINEAR}
     * {@link CURVE_SMOOTHSTEP}
     * {@link CURVE_SPLINE}
     * {@link CURVE_STEP}
-    
+
     Defaults to {@link CURVE_SMOOTHSTEP}.
     */
     type: number;
@@ -10208,10 +10208,10 @@ export class Quat {
      * The x component of the quaternion.
      * @example
      * var quat = new pc.Quat();
-    
+
     // Get x
     var x = quat.x;
-    
+
     // Set x
     quat.x = 0;
      */
@@ -10220,10 +10220,10 @@ export class Quat {
      * The y component of the quaternion.
      * @example
      * var quat = new pc.Quat();
-    
+
     // Get y
     var y = quat.y;
-    
+
     // Set y
     quat.y = 0;
      */
@@ -10232,10 +10232,10 @@ export class Quat {
      * The z component of the quaternion.
      * @example
      * var quat = new pc.Quat();
-    
+
     // Get z
     var z = quat.z;
-    
+
     // Set z
     quat.z = 0;
      */
@@ -10244,10 +10244,10 @@ export class Quat {
      * The w component of the quaternion.
      * @example
      * var quat = new pc.Quat();
-    
+
     // Get w
     var w = quat.w;
-    
+
     // Set w
     quat.w = 0;
      */
@@ -10257,7 +10257,7 @@ export class Quat {
      * @example
      * var q = new pc.Quat(-0.11, -0.15, -0.46, 0.87);
     var qclone = q.clone();
-    
+
     console.log("The result of the cloning is: " + q.toString());
      * @returns A quaternion containing the result of the cloning.
      */
@@ -10314,7 +10314,7 @@ export class Quat {
      * @example
      * // Create a quaternion rotated 180 degrees around the y-axis
     var rot = new pc.Quat().setFromEulerAngles(0, 180, 0);
-    
+
     // Invert in place
     rot.invert();
      * @returns Self for chaining.
@@ -10345,11 +10345,11 @@ export class Quat {
      * @example
      * var a = new pc.Quat().setFromEulerAngles(0, 30, 0);
     var b = new pc.Quat().setFromEulerAngles(0, 60, 0);
-    
+
     // a becomes a 90 degree rotation around the Y axis
     // In other words, a = a * b
     a.mul(b);
-    
+
     console.log("The result of the multiplication is: " + a.toString());
      * @param rhs - The quaternion used as the second multiplicand of the operation.
      * @returns Self for chaining.
@@ -10361,11 +10361,11 @@ export class Quat {
      * var a = new pc.Quat().setFromEulerAngles(0, 30, 0);
     var b = new pc.Quat().setFromEulerAngles(0, 60, 0);
     var r = new pc.Quat();
-    
+
     // r is set to a 90 degree rotation around the Y axis
     // In other words, r = a * b
     r.mul2(a, b);
-    
+
     console.log("The result of the multiplication is: " + r.toString());
      * @param lhs - The quaternion used as the first multiplicand of the operation.
      * @param rhs - The quaternion used as the second multiplicand of the operation.
@@ -10376,9 +10376,9 @@ export class Quat {
      * Returns the specified quaternion converted in place to a unit quaternion.
      * @example
      * var v = new pc.Quat(0, 0, 0, 5);
-    
+
     v.normalize();
-    
+
     // Outputs 0, 0, 0, 1
     console.log("The result of the vector normalization is: " + v.toString());
      * @returns The result of the normalization.
@@ -10389,7 +10389,7 @@ export class Quat {
      * @example
      * var q = new pc.Quat();
     q.set(1, 0, 0, 0);
-    
+
     // Outputs 1, 0, 0, 0
     console.log("The result of the vector set is: " + q.toString());
      * @param x - The x component of the quaternion.
@@ -10427,7 +10427,7 @@ export class Quat {
      * @example
      * // Create a 4x4 rotation matrix of 180 degrees around the y-axis
     var rot = new pc.Mat4().setFromAxisAngle(pc.Vec3.UP, 180);
-    
+
     // Convert to a quaternion
     var q = new pc.Quat().setFromMat4(rot);
      * @param m - The 4x4 matrix to convert.
@@ -10440,7 +10440,7 @@ export class Quat {
      * @example
      * var q1 = new pc.Quat(-0.11, -0.15, -0.46, 0.87);
     var q2 = new pc.Quat(-0.21, -0.21, -0.67, 0.68);
-    
+
     var result;
     result = new pc.Quat().slerp(q1, q2, 0);   // Return q1
     result = new pc.Quat().slerp(q1, q2, 0.5); // Return the midpoint interpolant
@@ -10458,10 +10458,10 @@ export class Quat {
      * @example
      * // Create a 3-dimensional vector
     var v = new pc.Vec3(1, 2, 3);
-    
+
     // Create a 4x4 rotation matrix
     var q = new pc.Quat().setFromEulerAngles(10, 20, 30);
-    
+
     var tv = q.transformVector(v);
      * @param vec - The 3-dimensional vector to be transformed.
      * @param [res] - An optional 3-dimensional vector to receive the result of the transformation.
@@ -10500,10 +10500,10 @@ export class Vec2 {
      * The first element of the vector.
      * @example
      * var vec = new pc.Vec2(10, 20);
-    
+
     // Get x
     var x = vec.x;
-    
+
     // Set x
     vec.x = 0;
      */
@@ -10512,10 +10512,10 @@ export class Vec2 {
      * The second element of the vector.
      * @example
      * var vec = new pc.Vec2(10, 20);
-    
+
     // Get y
     var y = vec.y;
-    
+
     // Set y
     vec.y = 0;
      */
@@ -10525,9 +10525,9 @@ export class Vec2 {
      * @example
      * var a = new pc.Vec2(10, 10);
     var b = new pc.Vec2(20, 20);
-    
+
     a.add(b);
-    
+
     // Outputs [30, 30]
     console.log("The result of the addition is: " + a.toString());
      * @param rhs - The vector to add to the specified vector.
@@ -10540,10 +10540,10 @@ export class Vec2 {
      * var a = new pc.Vec2(10, 10);
     var b = new pc.Vec2(20, 20);
     var r = new pc.Vec2();
-    
+
     r.add2(a, b);
     // Outputs [30, 30]
-    
+
     console.log("The result of the addition is: " + r.toString());
      * @param lhs - The first vector operand for the addition.
      * @param rhs - The second vector operand for the addition.
@@ -10554,9 +10554,9 @@ export class Vec2 {
      * Adds a number to each element of a vector.
      * @example
      * var vec = new pc.Vec2(3, 4);
-    
+
     vec.addScalar(2);
-    
+
     // Outputs [5, 6]
     console.log("The result of the addition is: " + vec.toString());
      * @param scalar - The number to add.
@@ -10577,9 +10577,9 @@ export class Vec2 {
      * @example
      * var src = new pc.Vec2(10, 20);
     var dst = new pc.Vec2();
-    
+
     dst.copy(src);
-    
+
     console.log("The two vectors are " + (dst.equals(src) ? "equal" : "different"));
      * @param rhs - A vector to copy to the specified vector.
      * @returns Self for chaining.
@@ -10591,7 +10591,7 @@ export class Vec2 {
      * var right = new pc.Vec2(1, 0);
     var up = new pc.Vec2(0, 1);
     var crossProduct = right.cross(up);
-    
+
     // Prints 1
     console.log("The result of the cross product is: " + crossProduct);
      * @param rhs - The second 2-dimensional vector operand of the cross product.
@@ -10614,9 +10614,9 @@ export class Vec2 {
      * @example
      * var a = new pc.Vec2(4, 9);
     var b = new pc.Vec2(2, 3);
-    
+
     a.div(b);
-    
+
     // Outputs [2, 3]
     console.log("The result of the division is: " + a.toString());
      * @param rhs - The vector to divide the specified vector by.
@@ -10630,10 +10630,10 @@ export class Vec2 {
      * var a = new pc.Vec2(4, 9);
     var b = new pc.Vec2(2, 3);
     var r = new pc.Vec2();
-    
+
     r.div2(a, b);
     // Outputs [2, 3]
-    
+
     console.log("The result of the division is: " + r.toString());
      * @param lhs - The dividend vector (the vector being divided).
      * @param rhs - The divisor vector (the vector dividing the dividend).
@@ -10644,9 +10644,9 @@ export class Vec2 {
      * Divides each element of a vector by a number.
      * @example
      * var vec = new pc.Vec2(3, 6);
-    
+
     vec.divScalar(3);
-    
+
     // Outputs [1, 2]
     console.log("The result of the division is: " + vec.toString());
      * @param scalar - The number to divide by.
@@ -10700,7 +10700,7 @@ export class Vec2 {
      * var a = new pc.Vec2(0, 0);
     var b = new pc.Vec2(10, 10);
     var r = new pc.Vec2();
-    
+
     r.lerp(a, b, 0);   // r is equal to a
     r.lerp(a, b, 0.5); // r is 5, 5
     r.lerp(a, b, 1);   // r is equal to b
@@ -10717,9 +10717,9 @@ export class Vec2 {
      * @example
      * var a = new pc.Vec2(2, 3);
     var b = new pc.Vec2(4, 5);
-    
+
     a.mul(b);
-    
+
     // Outputs 8, 15
     console.log("The result of the multiplication is: " + a.toString());
      * @param rhs - The 2-dimensional vector used as the second multiplicand of the operation.
@@ -10732,9 +10732,9 @@ export class Vec2 {
      * var a = new pc.Vec2(2, 3);
     var b = new pc.Vec2(4, 5);
     var r = new pc.Vec2();
-    
+
     r.mul2(a, b);
-    
+
     // Outputs 8, 15
     console.log("The result of the multiplication is: " + r.toString());
      * @param lhs - The 2-dimensional vector used as the first multiplicand of the operation.
@@ -10746,9 +10746,9 @@ export class Vec2 {
      * Multiplies each element of a vector by a number.
      * @example
      * var vec = new pc.Vec2(3, 6);
-    
+
     vec.mulScalar(3);
-    
+
     // Outputs [9, 18]
     console.log("The result of the multiplication is: " + vec.toString());
      * @param scalar - The number to multiply by.
@@ -10760,9 +10760,9 @@ export class Vec2 {
     If the vector has a length of zero, the vector's elements will be set to zero.
      * @example
      * var v = new pc.Vec2(25, 0);
-    
+
     v.normalize();
-    
+
     // Outputs 1, 0
     console.log("The result of the vector normalization is: " + v.toString());
      * @returns Self for chaining.
@@ -10800,7 +10800,7 @@ export class Vec2 {
      * @example
      * var v = new pc.Vec2();
     v.set(5, 10);
-    
+
     // Outputs 5, 10
     console.log("The result of the vector set is: " + v.toString());
      * @param x - The value to set on the first component of the vector.
@@ -10813,9 +10813,9 @@ export class Vec2 {
      * @example
      * var a = new pc.Vec2(10, 10);
     var b = new pc.Vec2(20, 20);
-    
+
     a.sub(b);
-    
+
     // Outputs [-10, -10]
     console.log("The result of the subtraction is: " + a.toString());
      * @param rhs - The vector to add to the specified vector.
@@ -10828,9 +10828,9 @@ export class Vec2 {
      * var a = new pc.Vec2(10, 10);
     var b = new pc.Vec2(20, 20);
     var r = new pc.Vec2();
-    
+
     r.sub2(a, b);
-    
+
     // Outputs [-10, -10]
     console.log("The result of the subtraction is: " + r.toString());
      * @param lhs - The first vector operand for the addition.
@@ -10842,9 +10842,9 @@ export class Vec2 {
      * Subtracts a number from each element of a vector.
      * @example
      * var vec = new pc.Vec2(3, 4);
-    
+
     vec.subScalar(2);
-    
+
     // Outputs [1, 2]
     console.log("The result of the subtraction is: " + vec.toString());
      * @param scalar - The number to subtract.
@@ -10900,10 +10900,10 @@ export class Vec3 {
      * The first component of the vector.
      * @example
      * var vec = new pc.Vec3(10, 20, 30);
-    
+
     // Get x
     var x = vec.x;
-    
+
     // Set x
     vec.x = 0;
      */
@@ -10912,10 +10912,10 @@ export class Vec3 {
      * The second component of the vector.
      * @example
      * var vec = new pc.Vec3(10, 20, 30);
-    
+
     // Get y
     var y = vec.y;
-    
+
     // Set y
     vec.y = 0;
      */
@@ -10924,10 +10924,10 @@ export class Vec3 {
      * The third component of the vector.
      * @example
      * var vec = new pc.Vec3(10, 20, 30);
-    
+
     // Get z
     var z = vec.z;
-    
+
     // Set z
     vec.z = 0;
      */
@@ -10937,9 +10937,9 @@ export class Vec3 {
      * @example
      * var a = new pc.Vec3(10, 10, 10);
     var b = new pc.Vec3(20, 20, 20);
-    
+
     a.add(b);
-    
+
     // Outputs [30, 30, 30]
     console.log("The result of the addition is: " + a.toString());
      * @param rhs - The vector to add to the specified vector.
@@ -10952,10 +10952,10 @@ export class Vec3 {
      * var a = new pc.Vec3(10, 10, 10);
     var b = new pc.Vec3(20, 20, 20);
     var r = new pc.Vec3();
-    
+
     r.add2(a, b);
     // Outputs [30, 30, 30]
-    
+
     console.log("The result of the addition is: " + r.toString());
      * @param lhs - The first vector operand for the addition.
      * @param rhs - The second vector operand for the addition.
@@ -10966,9 +10966,9 @@ export class Vec3 {
      * Adds a number to each element of a vector.
      * @example
      * var vec = new pc.Vec3(3, 4, 5);
-    
+
     vec.addScalar(2);
-    
+
     // Outputs [5, 6, 7]
     console.log("The result of the addition is: " + vec.toString());
      * @param scalar - The number to add.
@@ -10989,9 +10989,9 @@ export class Vec3 {
      * @example
      * var src = new pc.Vec3(10, 20, 30);
     var dst = new pc.Vec3();
-    
+
     dst.copy(src);
-    
+
     console.log("The two vectors are " + (dst.equals(src) ? "equal" : "different"));
      * @param rhs - A vector to copy to the specified vector.
      * @returns Self for chaining.
@@ -11001,7 +11001,7 @@ export class Vec3 {
      * Returns the result of a cross product operation performed on the two specified 3-dimensional vectors.
      * @example
      * var back = new pc.Vec3().cross(pc.Vec3.RIGHT, pc.Vec3.UP);
-    
+
     // Prints the Z axis (i.e. [0, 0, 1])
     console.log("The result of the cross product is: " + back.toString());
      * @param lhs - The first 3-dimensional vector operand of the cross product.
@@ -11025,9 +11025,9 @@ export class Vec3 {
      * @example
      * var a = new pc.Vec3(4, 9, 16);
     var b = new pc.Vec3(2, 3, 4);
-    
+
     a.div(b);
-    
+
     // Outputs [2, 3, 4]
     console.log("The result of the division is: " + a.toString());
      * @param rhs - The vector to divide the specified vector by.
@@ -11041,10 +11041,10 @@ export class Vec3 {
      * var a = new pc.Vec3(4, 9, 16);
     var b = new pc.Vec3(2, 3, 4);
     var r = new pc.Vec3();
-    
+
     r.div2(a, b);
     // Outputs [2, 3, 4]
-    
+
     console.log("The result of the division is: " + r.toString());
      * @param lhs - The dividend vector (the vector being divided).
      * @param rhs - The divisor vector (the vector dividing the dividend).
@@ -11055,9 +11055,9 @@ export class Vec3 {
      * Divides each element of a vector by a number.
      * @example
      * var vec = new pc.Vec3(3, 6, 9);
-    
+
     vec.divScalar(3);
-    
+
     // Outputs [1, 2, 3]
     console.log("The result of the division is: " + vec.toString());
      * @param scalar - The number to divide by.
@@ -11111,7 +11111,7 @@ export class Vec3 {
      * var a = new pc.Vec3(0, 0, 0);
     var b = new pc.Vec3(10, 10, 10);
     var r = new pc.Vec3();
-    
+
     r.lerp(a, b, 0);   // r is equal to a
     r.lerp(a, b, 0.5); // r is 5, 5, 5
     r.lerp(a, b, 1);   // r is equal to b
@@ -11128,9 +11128,9 @@ export class Vec3 {
      * @example
      * var a = new pc.Vec3(2, 3, 4);
     var b = new pc.Vec3(4, 5, 6);
-    
+
     a.mul(b);
-    
+
     // Outputs 8, 15, 24
     console.log("The result of the multiplication is: " + a.toString());
      * @param rhs - The 3-dimensional vector used as the second multiplicand of the operation.
@@ -11143,9 +11143,9 @@ export class Vec3 {
      * var a = new pc.Vec3(2, 3, 4);
     var b = new pc.Vec3(4, 5, 6);
     var r = new pc.Vec3();
-    
+
     r.mul2(a, b);
-    
+
     // Outputs 8, 15, 24
     console.log("The result of the multiplication is: " + r.toString());
      * @param lhs - The 3-dimensional vector used as the first multiplicand of the operation.
@@ -11157,9 +11157,9 @@ export class Vec3 {
      * Multiplies each element of a vector by a number.
      * @example
      * var vec = new pc.Vec3(3, 6, 9);
-    
+
     vec.mulScalar(3);
-    
+
     // Outputs [9, 18, 27]
     console.log("The result of the multiplication is: " + vec.toString());
      * @param scalar - The number to multiply by.
@@ -11171,9 +11171,9 @@ export class Vec3 {
     If the vector has a length of zero, the vector's elements will be set to zero.
      * @example
      * var v = new pc.Vec3(25, 0, 0);
-    
+
     v.normalize();
-    
+
     // Outputs 1, 0, 0
     console.log("The result of the vector normalization is: " + v.toString());
      * @returns Self for chaining.
@@ -11211,9 +11211,9 @@ export class Vec3 {
      * @example
      * var v = new pc.Vec3(5, 5, 5);
     var normal = new pc.Vec3(1, 0, 0);
-    
+
     v.project(normal);
-    
+
     // Outputs 5, 0, 0
     console.log("The result of the vector projection is: " + v.toString());
      * @param rhs - The vector onto which the original vector will be projected on.
@@ -11225,7 +11225,7 @@ export class Vec3 {
      * @example
      * var v = new pc.Vec3();
     v.set(5, 10, 20);
-    
+
     // Outputs 5, 10, 20
     console.log("The result of the vector set is: " + v.toString());
      * @param x - The value to set on the first component of the vector.
@@ -11239,9 +11239,9 @@ export class Vec3 {
      * @example
      * var a = new pc.Vec3(10, 10, 10);
     var b = new pc.Vec3(20, 20, 20);
-    
+
     a.sub(b);
-    
+
     // Outputs [-10, -10, -10]
     console.log("The result of the subtraction is: " + a.toString());
      * @param rhs - The vector to add to the specified vector.
@@ -11254,9 +11254,9 @@ export class Vec3 {
      * var a = new pc.Vec3(10, 10, 10);
     var b = new pc.Vec3(20, 20, 20);
     var r = new pc.Vec3();
-    
+
     r.sub2(a, b);
-    
+
     // Outputs [-10, -10, -10]
     console.log("The result of the subtraction is: " + r.toString());
      * @param lhs - The first vector operand for the addition.
@@ -11268,9 +11268,9 @@ export class Vec3 {
      * Subtracts a number from each element of a vector.
      * @example
      * var vec = new pc.Vec3(3, 4, 5);
-    
+
     vec.subScalar(2);
-    
+
     // Outputs [1, 2, 3]
     console.log("The result of the subtraction is: " + vec.toString());
      * @param scalar - The number to subtract.
@@ -11335,10 +11335,10 @@ export class Vec4 {
      * The first component of the vector.
      * @example
      * var vec = new pc.Vec4(10, 20, 30, 40);
-    
+
     // Get x
     var x = vec.x;
-    
+
     // Set x
     vec.x = 0;
      */
@@ -11347,10 +11347,10 @@ export class Vec4 {
      * The second component of the vector.
      * @example
      * var vec = new pc.Vec4(10, 20, 30, 40);
-    
+
     // Get y
     var y = vec.y;
-    
+
     // Set y
     vec.y = 0;
      */
@@ -11359,10 +11359,10 @@ export class Vec4 {
      * The third component of the vector.
      * @example
      * var vec = new pc.Vec4(10, 20, 30, 40);
-    
+
     // Get z
     var z = vec.z;
-    
+
     // Set z
     vec.z = 0;
      */
@@ -11371,10 +11371,10 @@ export class Vec4 {
      * The fourth component of the vector.
      * @example
      * var vec = new pc.Vec4(10, 20, 30, 40);
-    
+
     // Get w
     var w = vec.w;
-    
+
     // Set w
     vec.w = 0;
      */
@@ -11384,9 +11384,9 @@ export class Vec4 {
      * @example
      * var a = new pc.Vec4(10, 10, 10, 10);
     var b = new pc.Vec4(20, 20, 20, 20);
-    
+
     a.add(b);
-    
+
     // Outputs [30, 30, 30]
     console.log("The result of the addition is: " + a.toString());
      * @param rhs - The vector to add to the specified vector.
@@ -11399,10 +11399,10 @@ export class Vec4 {
      * var a = new pc.Vec4(10, 10, 10, 10);
     var b = new pc.Vec4(20, 20, 20, 20);
     var r = new pc.Vec4();
-    
+
     r.add2(a, b);
     // Outputs [30, 30, 30]
-    
+
     console.log("The result of the addition is: " + r.toString());
      * @param lhs - The first vector operand for the addition.
      * @param rhs - The second vector operand for the addition.
@@ -11413,9 +11413,9 @@ export class Vec4 {
      * Adds a number to each element of a vector.
      * @example
      * var vec = new pc.Vec4(3, 4, 5, 6);
-    
+
     vec.addScalar(2);
-    
+
     // Outputs [5, 6, 7, 8]
     console.log("The result of the addition is: " + vec.toString());
      * @param scalar - The number to add.
@@ -11436,9 +11436,9 @@ export class Vec4 {
      * @example
      * var src = new pc.Vec4(10, 20, 30, 40);
     var dst = new pc.Vec4();
-    
+
     dst.copy(src);
-    
+
     console.log("The two vectors are " + (dst.equals(src) ? "equal" : "different"));
      * @param rhs - A vector to copy to the specified vector.
      * @returns Self for chaining.
@@ -11449,9 +11449,9 @@ export class Vec4 {
      * @example
      * var a = new pc.Vec4(4, 9, 16, 25);
     var b = new pc.Vec4(2, 3, 4, 5);
-    
+
     a.div(b);
-    
+
     // Outputs [2, 3, 4, 5]
     console.log("The result of the division is: " + a.toString());
      * @param rhs - The vector to divide the specified vector by.
@@ -11465,10 +11465,10 @@ export class Vec4 {
      * var a = new pc.Vec4(4, 9, 16, 25);
     var b = new pc.Vec4(2, 3, 4, 5);
     var r = new pc.Vec4();
-    
+
     r.div2(a, b);
     // Outputs [2, 3, 4, 5]
-    
+
     console.log("The result of the division is: " + r.toString());
      * @param lhs - The dividend vector (the vector being divided).
      * @param rhs - The divisor vector (the vector dividing the dividend).
@@ -11479,9 +11479,9 @@ export class Vec4 {
      * Divides each element of a vector by a number.
      * @example
      * var vec = new pc.Vec4(3, 6, 9, 12);
-    
+
     vec.divScalar(3);
-    
+
     // Outputs [1, 2, 3, 4]
     console.log("The result of the division is: " + vec.toString());
      * @param scalar - The number to divide by.
@@ -11535,7 +11535,7 @@ export class Vec4 {
      * var a = new pc.Vec4(0, 0, 0, 0);
     var b = new pc.Vec4(10, 10, 10, 10);
     var r = new pc.Vec4();
-    
+
     r.lerp(a, b, 0);   // r is equal to a
     r.lerp(a, b, 0.5); // r is 5, 5, 5, 5
     r.lerp(a, b, 1);   // r is equal to b
@@ -11552,9 +11552,9 @@ export class Vec4 {
      * @example
      * var a = new pc.Vec4(2, 3, 4, 5);
     var b = new pc.Vec4(4, 5, 6, 7);
-    
+
     a.mul(b);
-    
+
     // Outputs 8, 15, 24, 35
     console.log("The result of the multiplication is: " + a.toString());
      * @param rhs - The 4-dimensional vector used as the second multiplicand of the operation.
@@ -11567,9 +11567,9 @@ export class Vec4 {
      * var a = new pc.Vec4(2, 3, 4, 5);
     var b = new pc.Vec4(4, 5, 6, 7);
     var r = new pc.Vec4();
-    
+
     r.mul2(a, b);
-    
+
     // Outputs 8, 15, 24, 35
     console.log("The result of the multiplication is: " + r.toString());
      * @param lhs - The 4-dimensional vector used as the first multiplicand of the operation.
@@ -11581,9 +11581,9 @@ export class Vec4 {
      * Multiplies each element of a vector by a number.
      * @example
      * var vec = new pc.Vec4(3, 6, 9, 12);
-    
+
     vec.mulScalar(3);
-    
+
     // Outputs [9, 18, 27, 36]
     console.log("The result of the multiplication is: " + vec.toString());
      * @param scalar - The number to multiply by.
@@ -11595,9 +11595,9 @@ export class Vec4 {
     If the vector has a length of zero, the vector's elements will be set to zero.
      * @example
      * var v = new pc.Vec4(25, 0, 0, 0);
-    
+
     v.normalize();
-    
+
     // Outputs 1, 0, 0, 0
     console.log("The result of the vector normalization is: " + v.toString());
      * @returns Self for chaining.
@@ -11635,7 +11635,7 @@ export class Vec4 {
      * @example
      * var v = new pc.Vec4();
     v.set(5, 10, 20, 40);
-    
+
     // Outputs 5, 10, 20, 40
     console.log("The result of the vector set is: " + v.toString());
      * @param x - The value to set on the first component of the vector.
@@ -11650,9 +11650,9 @@ export class Vec4 {
      * @example
      * var a = new pc.Vec4(10, 10, 10, 10);
     var b = new pc.Vec4(20, 20, 20, 20);
-    
+
     a.sub(b);
-    
+
     // Outputs [-10, -10, -10, -10]
     console.log("The result of the subtraction is: " + a.toString());
      * @param rhs - The vector to add to the specified vector.
@@ -11665,9 +11665,9 @@ export class Vec4 {
      * var a = new pc.Vec4(10, 10, 10, 10);
     var b = new pc.Vec4(20, 20, 20, 20);
     var r = new pc.Vec4();
-    
+
     r.sub2(a, b);
-    
+
     // Outputs [-10, -10, -10, -10]
     console.log("The result of the subtraction is: " + r.toString());
      * @param lhs - The first vector operand for the subtraction.
@@ -11679,9 +11679,9 @@ export class Vec4 {
      * Subtracts a number from each element of a vector.
      * @example
      * var vec = new pc.Vec4(3, 4, 5, 6);
-    
+
     vec.subScalar(2);
-    
+
     // Outputs [1, 2, 3, 4]
     console.log("The result of the subtraction is: " + vec.toString());
      * @param scalar - The number to subtract.
@@ -12235,6 +12235,7 @@ export class FontHandler implements ResourceHandler {
  * Interface for ResourceHandlers used by {@link ResourceLoader}.
  */
 export interface ResourceHandler {
+    crossOrigin: string;
     /**
      * Load a resource from a remote URL. When loaded (or failed),
      * use the callback to return an the raw resource data (or error).
@@ -14122,37 +14123,37 @@ export class Layer {
     /**
      * Defines the method used for sorting opaque (that is, not semi-transparent) mesh instances before rendering.
     Possible values are:
-    
+
     * {@link SORTMODE_NONE}
     * {@link SORTMODE_MANUAL}
     * {@link SORTMODE_MATERIALMESH}
     * {@link SORTMODE_BACK2FRONT}
     * {@link SORTMODE_FRONT2BACK}
-    
+
     Defaults to {@link SORTMODE_MATERIALMESH}.
     */
     opaqueSortMode: number;
     /**
      * Defines the method used for sorting semi-transparent mesh instances before rendering.
     Possible values are:
-    
+
     * {@link SORTMODE_NONE}
     * {@link SORTMODE_MANUAL}
     * {@link SORTMODE_MATERIALMESH}
     * {@link SORTMODE_BACK2FRONT}
     * {@link SORTMODE_FRONT2BACK}
-    
+
     Defaults to {@link SORTMODE_BACK2FRONT}.
     */
     transparentSortMode: number;
     /**
      * A type of shader to use during rendering. Possible values are:
-    
+
     * {@link SHADER_FORWARD}
     * {@link SHADER_FORWARDHDR}
     * {@link SHADER_DEPTH}
     * Your own custom value. Should be in 19 - 31 range. Use {@link StandardMaterial#onUpdateShader} to apply shader modifications based on this value.
-    
+
     Defaults to {@link SHADER_FORWARD}.
     */
     shaderPass: number;
@@ -14184,18 +14185,18 @@ export class Layer {
     /**
      * Custom function that is called after the layer has been enabled.
     This happens when:
-    
+
     * The layer is created with {@link Layer#enabled} set to true (which is the default value).
     * {@link Layer#enabled} was changed from false to true
     * {@link Layer#incrementCounter} was called and incremented the counter above zero.
-    
+
     Useful for allocating resources this layer will use (e.g. creating render targets).
     */
     onEnable: (...params: any[]) => any;
     /**
      * Custom function that is called after the layer has been disabled.
     This happens when:
-    
+
     * {@link Layer#enabled} was changed from true to false
     * {@link Layer#decrementCounter} was called and set the counter to zero.
     */
@@ -14417,7 +14418,7 @@ export class Material {
     /**
      * Controls how primitives are blended when being written to the currently active render target.
     Can be:
-    
+
     * {@link BLEND_SUBTRACTIVE}: Subtract the color of the source fragment from the destination fragment and write the result to the frame buffer.
     * {@link BLEND_ADDITIVE}: Add the color of the source fragment to the destination fragment and write the result to the frame buffer.
     * {@link BLEND_NORMAL}: Enable simple translucency for materials such as glass. This is equivalent to enabling a source blend mode of {@link BLENDMODE_SRC_ALPHA} and a destination blend mode of {@link BLENDMODE_ONE_MINUS_SRC_ALPHA}.
@@ -14425,7 +14426,7 @@ export class Material {
     * {@link BLEND_PREMULTIPLIED}: Similar to {@link BLEND_NORMAL} expect the source fragment is assumed to have already been multiplied by the source alpha value.
     * {@link BLEND_MULTIPLICATIVE}: Multiply the color of the source fragment by the color of the destination fragment and write the result to the frame buffer.
     * {@link BLEND_ADDITIVEALPHA}: Same as {@link BLEND_ADDITIVE} except the source RGB is multiplied by the source alpha.
-    
+
     Defaults to {@link BLEND_NONE}.
     */
     blendType: number;
@@ -14437,12 +14438,12 @@ export class Material {
     /**
      * Controls how triangles are culled based on their face direction with respect to the viewpoint.
     Can be:
-    
+
     * {@link CULLFACE_NONE}: Do not cull triangles based on face direction.
     * {@link CULLFACE_BACK}: Cull the back faces of triangles (do not render triangles facing away from the view point).
     * {@link CULLFACE_FRONT}: Cull the front faces of triangles (do not render triangles facing towards the view point).
     * {@link CULLFACE_FRONTANDBACK}: Cull both front and back faces (triangles will not be rendered).
-    
+
     Defaults to {@link CULLFACE_BACK}.
     */
     cull: number;
@@ -15547,11 +15548,11 @@ export class MeshInstance {
     material: Material;
     /**
      * The render style of the mesh instance. Can be:
-    
+
     * {@link RENDERSTYLE_SOLID}
     * {@link RENDERSTYLE_WIREFRAME}
     * {@link RENDERSTYLE_POINTS}
-    
+
     Defaults to {@link RENDERSTYLE_SOLID}.
     */
     renderStyle: number;
@@ -16294,12 +16295,12 @@ export class Scene extends EventHandler {
     ambientLight: Color;
     /**
      * The type of fog used by the scene. Can be:
-    
+
     * {@link FOG_NONE}
     * {@link FOG_LINEAR}
     * {@link FOG_EXP}
     * {@link FOG_EXP2}
-    
+
     Defaults to {@link FOG_NONE}.
     */
     fog: string;
@@ -16327,22 +16328,22 @@ export class Scene extends EventHandler {
     /**
      * The gamma correction to apply when rendering the
     scene. Can be:
-    
+
     * {@link GAMMA_NONE}
     * {@link GAMMA_SRGB}
-    
+
     Defaults to {@link GAMMA_NONE}.
     */
     gammaCorrection: number;
     /**
      * The tonemapping transform to apply when writing
     fragments to the frame buffer. Can be:
-    
+
     * {@link TONEMAP_LINEAR}
     * {@link TONEMAP_FILMIC}
     * {@link TONEMAP_HEJL}
     * {@link TONEMAP_ACES}
-    
+
     Defaults to {@link TONEMAP_LINEAR}.
     */
     toneMapping: number;
@@ -16404,12 +16405,12 @@ export class Scene extends EventHandler {
     lightmapMaxResolution: number;
     /**
      * The lightmap baking mode. Can be:
-    
+
     * {@link BAKE_COLOR}: single color lightmap
     * {@link BAKE_COLORDIR}: single color lightmap + dominant light direction (used for
     bump/specular). Only lights with bakeDir=true will be used for generating the dominant
     light direction.
-    
+
     Defaults to {@link BAKE_COLORDIR}.
     */
     lightmapMode: number;
@@ -16506,7 +16507,7 @@ export class Sprite extends EventHandler {
     atlas: TextureAtlas;
     /**
      * The rendering mode of the sprite. Can be:
-    
+
     * {@link SPRITE_RENDERMODE_SIMPLE}
     * {@link SPRITE_RENDERMODE_SLICED}
     * {@link SPRITE_RENDERMODE_TILED}
@@ -17404,11 +17405,11 @@ export class SoundInstance3d extends SoundInstance {
     velocity: Vec3;
     /**
      * Determines which algorithm to use to reduce the volume of the audio as it moves away from the listener. Can be:
-    
+
     * {@link DISTANCE_LINEAR}
     * {@link DISTANCE_INVERSE}
     * {@link DISTANCE_EXPONENTIAL}
-    
+
     Default is {@link DISTANCE_LINEAR}.
     */
     distanceModel: string;
@@ -17768,7 +17769,7 @@ export class XrDomOverlay {
     available: boolean;
     /**
      * State of the DOM Overlay, which defines how the root DOM element is rendered. Possible options:
-    
+
     * screen: Screen - indicates that the DOM element is covering whole physical screen, matching XR viewports.
     * floating: Floating - indicates that the underlying platform renders the DOM element as floating in space, which can move during the WebXR session or allow the application to move the element.
     * head-locked: Head Locked - indicates that the DOM element follows the user's head movement consistently, appearing similar to a helmet heads-up display.
@@ -18078,7 +18079,7 @@ export class XrInputSource extends EventHandler {
     inputSource: any;
     /**
      * Type of ray Input Device is based on. Can be one of the following:
-    
+
     * {@link XRTARGETRAY_GAZE}: Gaze - indicates the target ray will originate at the viewer and follow the direction it is facing. (This is commonly referred to as a "gaze input" device in the context of head-mounted displays.)
     * {@link XRTARGETRAY_SCREEN}: Screen - indicates that the input source was an interaction with the canvas element associated with an inline session’s output context, such as a mouse click or touch event.
     * {@link XRTARGETRAY_POINTER}: Tracked Pointer - indicates that the target ray originates from either a handheld device or other hand-tracking mechanism and represents that the user is using their hands or the held device for pointing.
@@ -18086,7 +18087,7 @@ export class XrInputSource extends EventHandler {
     targetRayMode: string;
     /**
      * Describes which hand input source is associated with. Can be one of the following:
-    
+
     * {@link XRHAND_NONE}: None - input source is not meant to be held in hands.
     * {@link XRHAND_LEFT}: Left - indicates that input source is meant to be held in left hand.
     * {@link XRHAND_RIGHT}: Right - indicates that input source is meant to be held in right hand.

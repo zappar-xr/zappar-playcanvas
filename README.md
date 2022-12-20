@@ -45,6 +45,7 @@ You may also be interested in:
             * [Mirror Mode](#mirror-mode)
             * [Camera Pose](#camera-pose)
             * [Front/Rear Camera Toggle](#frontrear-camera-toggle)
+            * [Realtime Camera-based Reflections](#realtime-camera-based-reflections)
             * [Snapshot &amp; Social Sharing](#snapshot--social-sharing)
       * [Compatibility and Browser Support](#compatibility-and-browser-support)
          * [Detecting Browser Compatibility](#detecting-browser-compatibility)
@@ -63,7 +64,7 @@ You may also be interested in:
          * [PlayCanvas](#playcanvas)
       * [Links and Resources](#links-and-resources)
 
-<!-- Added by: zapparadmin, at: Wed Mar 16 11:43:13 GMT 2022 -->
+<!-- Added by: zapparadmin, at: Tue Dec 20 16:06:06 GMT 2022 -->
 
 <!--te-->
 </details>
@@ -321,6 +322,20 @@ this.app.fire('zappar:camera', {message : 'flip', userFacing})
 
 This code would usually be found in a button click handler.
 
+#### Realtime Camera-based Reflections
+
+The SDK provides an automatically generated environment map that's useful if you're using materials that support reflections (e.g. StandardMaterial). The map uses the camera feed to create an approximate environment that can add some realism to your scene.
+
+To get started, enable the `Real Time Environment Map` entity in the hierarchy:
+
+<img src="images/camera-env-map-entity.png" width="720">
+
+And then simply tag any materials with the `reflective` tag:
+
+<img src="images/camera-reflective-tag.png" width="720">
+
+Any materials using this tag will now have it's `cubeMap` property sat automatically.
+You are able to modify this behavior inside the `Zappar/scripts/cubemapRenderer.js` script.
 #### Snapshot & Social Sharing
 
 This project allows you to easily implement a snapshot save/share functionality into your

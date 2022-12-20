@@ -4,7 +4,6 @@ const DEBUG = location.href.indexOf("https://launch.playcanvas.com/1043910") !==
 
 if (DEBUG) Zappar.setLogLevel( DEBUG? Zappar.LogLevel.LOG_LEVEL_VERBOSE : Zappar.LogLevel.LOG_LEVEL_WARNING ); //!TESTS
 
-
 // Script attributes for camera customization.
 ZapparCamera.attributes.add('Front Facing Camera', {
     type: 'boolean',
@@ -226,8 +225,15 @@ ZapparCamera.prototype.update = function () {
             mat.copy(projectionMatrix);
             const data = projectionMatrix.data;
             camera.horizontalFov = false;
+
+            // Calculate the horizontal and vertical field of view from the projection matrix.
             camera.fov = (2.0 * Math.atan(1.0 / data[5]) * 180.0) / Math.PI;
+
+            // data 5 is the focal length of the camera
+            // data 0 is the aspect ratio of the camera
             camera.aspectRatio = data[5] / data[0];
+
+            // data[14] is the far plane distance, data[10] is the far plane offset
             camera.farClip = data[14] / (data[10] + 1);
             camera.nearClip = data[14] / (data[10] - 1);
         };
@@ -294,6 +300,11 @@ ZapparCamera.prototype.initializeBackground = function() {
 
     this.material.shader = shader;
     this.material.setParameter('uCameraTexture', this.texture);
+
+
+
+
+
 };
 
 

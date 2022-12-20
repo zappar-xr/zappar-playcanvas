@@ -15,6 +15,10 @@ declare namespace Attributes{
         script : { zapparCamera : Prototypes.Camera }
     };
 
+    type ImageTracker = pc.Entity & {
+        script : { zapparImageTracker : Prototypes.imageTracker };
+    };
+
 }
 
 declare namespace Prototypes{
@@ -68,11 +72,26 @@ declare namespace Prototypes{
         onMouseDown : ((this: GlobalEventHandlers, ev: MouseEvent & { event : any}) => any)
     } & pc.ScriptComponent;
 
+    type cubemapRenderer = {
+        resolution : number;
+        cubeMap : pc.Texture;
+        mipmaps : boolean;
+        depth : boolean;
+        'Zappar Camera'?: Attributes.ZapparCamera
+        // TODO
+    } & pc.ScriptComponent;
+
+    type probeSphere = {
+        'Zappar Camera'?: Attributes.ZapparCamera
+
+    }
+
     type Camera = {
         source : {
             user : type.CameraSource | type.HTMLElementSource,
             rear : type.CameraSource | type.HTMLElementSource,
         };
+        probeSphere: pc.Entity;
         cameraPoseMatrix : pc.Mat4;
         mirror : boolean;
         pipeline: type.Pipeline;
@@ -118,6 +137,13 @@ declare namespace Prototypes{
         }
     } & pc.ScriptComponent;
 
+    type ZapparImageTargetPreviewMesh = {
+        'Image Tracker'?: Attributes.ImageTracker;
+        'Target Index': number;
+        mesh : pc.Mesh;
+        initialized : boolean;
+    }
+
 }
 
 declare global {
@@ -134,6 +160,9 @@ declare global {
             type BrowserUtil = typeof pc.ScriptType & { prototype : Prototypes.BrowserUtil};
             type ZapparScreenshot = typeof pc.ScriptType & { prototype : Prototypes.ZapparScreenshot};
             type ZapparWebGLSnapshot = typeof ZapparWebGLSnapshot;
+            type ZapparImageTargetPreviewMesh = typeof pc.ScriptType & { prototype : Prototypes.ZapparImageTargetPreviewMesh};
+            type CubemapRenderer = typeof pc.ScriptType & { prototype : Prototypes.cubemapRenderer};
+            type probeSphere = typeof pc.ScriptType & { prototype : Prototypes.probeSphere};
             namespace PC {
                 type GraphicsDevice = pc.GraphicsDevice & {
                     gl : WebGLRenderingContext,
